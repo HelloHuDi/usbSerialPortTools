@@ -1,3 +1,68 @@
 <resources>
     <string name="app_name">串口设备检测</string>
+    <string name="baudrate">波特率</string>
+    <string name="data_bits">数据位</string>
+    <string name="stop_bits">停止位</string>
+    <string name="parity">校验</string>
+    <string name="choose_device">请选择设备</string>
+    <string name="open_port">打开串口</string>
+    <string name="stop_port">关闭串口</string>
+    <string name="clear_text">清空文本</string>
+    <string name="send_data">发送数据</string>
+    <string name="send_hex">HEX发送</string>
+    <string name="receive_hex">HEX接收</string>
+    <string name="receive_hint">准备接收数据</string>
+    <string name="receive_data_count">RECEIVE COUNT</string>
+    <string name="send_data_hint">字符模式直接输入,如:Hello World,HEX模式用空格分割,如:1E 10 20 F0</string>
+    <string-array name="baudrates">
+        <item>50</item>
+        <item>75</item>
+        <item>110</item>
+        <item>134</item>
+        <item>150</item>
+        <item>200</item>
+        <item>300</item>
+        <item>600</item>
+        <item>1200</item>
+        <item>1800</item>
+        <item>2400</item>
+        <item>4800</item>
+        <item>9600</item>
+        <item>19200</item>
+        <item>38400</item>
+        <item>57600</item>
+        <item>115200</item>
+        <item>230400</item>
+        <item>460800</item>
+        <item>500000</item>
+        <item>576000</item>
+        <item>921600</item>
+        <item>1000000</item>
+        <item>1152000</item>
+        <item>1500000</item>
+        <item>2000000</item>
+        <item>2500000</item>
+        <item>3000000</item>
+        <item>3500000</item>
+        <item>4000000</item>
+    </string-array>
+    <string-array name="DATA_BITS">
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="STOP_BITS">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="PARITY">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
 </resources>

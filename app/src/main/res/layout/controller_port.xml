@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/et_write_data"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="@string/send_data_hint"
+        android:textSize="@dimen/text_size"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_hex"
+            style="@style/average_vertical_widget"
+            android:text="@string/send_hex"/>
+
+        <CheckBox
+            android:id="@+id/cb_hex_rev"
+            style="@style/average_vertical_widget"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@string/receive_hex"/>
+
+        <TextView
+            android:id="@+id/tv_receive_number"
+            style="@style/average_vertical_widget"
+            android:hint="@string/receive_data_count"/>
+
+        <Button
+            android:id="@+id/btn_send"
+            style="@style/average_vertical_widget"
+            android:onClick="sendDataToPort"
+            android:text="@string/send_data"/>
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:onClick="clearText"
+            style="@style/average_vertical_widget"
+            android:text="@string/clear_text"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/sv_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:background="@drawable/storke">
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/receive_hint"
+            android:padding="@dimen/margin_small"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size"/>
+    </ScrollView>
+</LinearLayout>

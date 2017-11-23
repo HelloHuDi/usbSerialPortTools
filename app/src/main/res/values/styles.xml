@@ -15,13 +15,20 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/choose_pattern_selector</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">30px</item>
+        <item name="android:textSize">@dimen/text_size</item>
     </style>
-
     <style name="choose_pattern_space_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">3</item>
+    </style>
+    <style name="average_vertical_widget">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
 </resources>

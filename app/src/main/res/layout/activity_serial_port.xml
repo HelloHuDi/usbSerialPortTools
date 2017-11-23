@@ -1,10 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tools.view.SerialPortMeasureActivity">
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_small">
 
-</android.support.constraint.ConstraintLayout>
+    <include
+        layout="@layout/port_list"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:ignore="NestedWeights"/>
+
+    <View
+        android:layout_width="5dp"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/device_measure_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:ignore="NestedWeights"/>
+
+        <include
+            layout="@layout/serial_receive_send_test"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            tools:ignore="NestedWeights"/>
+
+        <include
+            layout="@layout/controller_port"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"/>
+    </LinearLayout>
+
+</LinearLayout>
