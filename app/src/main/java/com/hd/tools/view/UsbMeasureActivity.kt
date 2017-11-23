@@ -10,8 +10,9 @@ import com.hd.tools.R
 import kotlinx.android.synthetic.main.device_measure_title.*
 
 
+
 /**
- * Created by hd on 2017/8/29 .
+ * Created by hd on 2017/11/22.
  *
  */
 class UsbMeasureActivity : MeasureActivity<UsbSerialPort>() {
@@ -61,7 +62,7 @@ class UsbMeasureActivity : MeasureActivity<UsbSerialPort>() {
                     }
 
                     override fun measuring(usbSerialPort: UsbSerialPort, data: ByteArray) {
-                        receiveData(data)
+                        receiveData(usbSerialPort,data)
                     }
 
                     override fun write(usbSerialPort: UsbSerialPort) {

@@ -1,8 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/storke"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:padding="@dimen/margin_small">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:gravity="center"
+        android:text="@string/send_receive_test"
+        tools:ignore="NestedWeights"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/average_vertical_widget"
+            android:text="@string/send_data"
+            tools:ignore="NestedWeights"/>
+
+        <TextView
+            android:id="@+id/tv_sendDataCount"
+            style="@style/average_vertical_widget"
+            android:layout_marginStart="@dimen/margin_small"
+            tools:ignore="NestedWeights"/>
+
+        <TextView
+            style="@style/average_vertical_widget"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@string/receive_data"
+            tools:ignore="NestedWeights"/>
+
+        <TextView
+            android:id="@+id/tv_receiveDataCount"
+            style="@style/average_vertical_widget"
+            tools:ignore="NestedWeights"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_weight="1">
+
+        <TextView
+            style="@style/average_vertical_widget"
+            android:text="@string/lose_data"
+            tools:ignore="NestedWeights"/>
+
+        <TextView
+            android:id="@+id/tv_loseDataCount"
+            style="@style/average_vertical_widget"
+            android:layout_marginStart="@dimen/margin_small"
+            tools:ignore="NestedWeights"/>
+
+        <TextView
+            style="@style/average_vertical_widget"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@string/abnormal_data"
+            tools:ignore="NestedWeights"/>
+
+        <TextView
+            android:id="@+id/tv_abnormalDataCount"
+            style="@style/average_vertical_widget"
+            tools:ignore="NestedWeights"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_weight="0.6">
+
+        <Button
+            style="@style/average_vertical_widget"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@string/start_test"/>
+
+        <Button
+            style="@style/average_vertical_widget"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@string/stop_test"/>
+    </LinearLayout>
+</LinearLayout>

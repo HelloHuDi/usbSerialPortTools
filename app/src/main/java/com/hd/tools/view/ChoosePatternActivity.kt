@@ -8,6 +8,10 @@ import com.hd.tools.help.ShowVideo
 import kotlinx.android.synthetic.main.activity_choose_pattern.*
 import org.jetbrains.anko.startActivity
 
+/**
+ * Created by hd on 2017/11/22.
+ *
+ */
 class ChoosePatternActivity : BaseActivity() {
 
     private val showVideo by lazy { ShowVideo(this, bgVideoView, R.raw.health_live, "health_live.mp4") }

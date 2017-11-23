@@ -4,8 +4,9 @@ import android.app.Application
 import com.hd.serialport.method.DeviceMeasureController
 
 
+
 /**
- * Created by hd on 2017/8/29 .
+ * Created by hd on 2017/11/22.
  *
  */
 class AIOApp : Application() {

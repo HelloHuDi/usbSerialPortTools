@@ -12,11 +12,11 @@ import android.view.ViewGroup
 import android.widget.*
 import com.hd.serialport.method.DeviceMeasureController
 import com.hd.serialport.utils.HexDump
+import com.hd.serialport.utils.L
 import com.hd.tools.R
 import kotlinx.android.synthetic.main.controller_port.*
 import kotlinx.android.synthetic.main.device_measure_title.*
 import kotlinx.android.synthetic.main.port_list.*
-import org.jetbrains.anko.toast
 import java.io.UnsupportedEncodingException
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -108,7 +108,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
             btn_open_or_close.text = resources.getString(R.string.open_port)
         } else {//open
             if (port == null) {
-                toast(resources.getString(R.string.choose_device))
+                receiveData(resources.getString(R.string.choose_device))
             } else {
                 open.set(true)
                 startConnect()
@@ -120,7 +120,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
     /** [btn_send]*/
     fun sendDataToPort(v: android.view.View) {
         if (!open.get()) {
-            receiveData("请先打开串口")
+            receiveData(resources.getString(R.string.please_open_port_first))
             return
         }
         sendData(et_write_data.text.toString().trim())
@@ -151,31 +151,9 @@ abstract class MeasureActivity<T> : BaseActivity() {
         val ins = data.trim()
         if (cb_hex.isChecked) {// HEX
             if (ins.isNotEmpty()) {
-                val hexs = ins.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val bytes = ByteArray(hexs.size)
-                var okflag = true
-                for (index in hexs.indices) {
-                    val hex = hexs[index]
-                    try {
-                        val d = Integer.parseInt(hex, 16)
-                        if (d > 255) {
-                            receiveData(String.format("%s 大于0xff", hex))
-                            okflag = false
-                        } else {
-                            bytes[index] = d.toByte()
-                        }
-                    } catch (e: NumberFormatException) {
-                        receiveData(String.format("%s 不是十六进制数", hex))
-                        e.printStackTrace()
-                        okflag = false
-                    }
-                }
-                arrayList.add(bytes)
-                if (okflag && arrayList.size > 0) {
-                    DeviceMeasureController.write(arrayList)
-                }
+                sendHexData(ins, arrayList)
             } else {
-                receiveData("要发送的十六进制数据为空")
+                receiveData(resources.getString(R.string.send_data_is_null))
             }
         } else {
             try {
@@ -183,8 +161,34 @@ abstract class MeasureActivity<T> : BaseActivity() {
                 DeviceMeasureController.write(arrayList)
             } catch (e: UnsupportedEncodingException) {
                 e.printStackTrace()
-                receiveData("转换编码失败")
+                receiveData(resources.getString(R.string.transcoding_failure))
             }
+        }
+    }
+
+    private fun sendHexData(ins: String, arrayList: ArrayList<ByteArray>) {
+        val hexs = ins.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val bytes = ByteArray(hexs.size)
+        var okflag = true
+        for (index in hexs.indices) {
+            val hex = hexs[index]
+            try {
+                val d = Integer.parseInt(hex, 16)
+                if (d > 255) {
+                    receiveData(String.format(resources.getString(R.string.greater_than_ff), hex))
+                    okflag = false
+                } else {
+                    bytes[index] = d.toByte()
+                }
+            } catch (e: NumberFormatException) {
+                receiveData(String.format(resources.getString(R.string.is_not_hex), hex))
+                e.printStackTrace()
+                okflag = false
+            }
+        }
+        arrayList.add(bytes)
+        if (okflag && arrayList.size > 0) {
+            DeviceMeasureController.write(arrayList)
         }
     }
 
@@ -199,7 +203,8 @@ abstract class MeasureActivity<T> : BaseActivity() {
         }
     }
 
-    protected fun receiveData(data: ByteArray){
+    protected fun receiveData(t:T,data: ByteArray){
+        L.d("=="+t)
         val result = if (cb_hex_rev.isChecked) {
             HexDump.toHexString(data)
         } else {
