@@ -12,7 +12,7 @@
     <string name="choose_device">请选择设备</string>
     <string name="please_open_port_first">请先打开串口</string>
     <string name="open_port">打开串口</string>
-    <string name="stop_port">关闭串口</string>
+    <string name="close_port">关闭串口</string>
     <string name="clear_text">清空文本</string>
     <string name="send_data">发送数据</string>
     <string name="send_receive_test">数据收发测试</string>

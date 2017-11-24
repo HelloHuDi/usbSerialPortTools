@@ -59,8 +59,8 @@ abstract class MeasureActivity<T> : BaseActivity() {
         initDeviceList()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         stopConnect()
     }
 
@@ -74,7 +74,6 @@ abstract class MeasureActivity<T> : BaseActivity() {
                 } else {
                     convertView as TextView
                 }
-                deviceContent.textSize = resources.getDimension(R.dimen.text_size)
                 if (port === mEntries[position]) {
                     deviceContent.setBackgroundColor(Color.RED)
                 } else {
@@ -112,7 +111,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
             } else {
                 open.set(true)
                 startConnect()
-                btn_open_or_close.text = resources.getString(R.string.open_port)
+                btn_open_or_close.text = resources.getString(R.string.close_port)
             }
         }
     }
@@ -146,7 +145,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
         spinner.adapter = adapter
     }
 
-    private fun sendData(data: String) {
+    open fun sendData(data: String) {
         val arrayList = ArrayList<ByteArray>()
         val ins = data.trim()
         if (cb_hex.isChecked) {// HEX
@@ -198,19 +197,19 @@ abstract class MeasureActivity<T> : BaseActivity() {
     protected fun receiveData(string: String){
         runOnUiThread {
             tv_receive_number.text = "receive: " + receiveNumber
-            tv_result.append(string + "\n")
-            handler.post({ sv_result.fullScroll(ScrollView.FOCUS_DOWN) })
+            tv_result.append(string + " ")
         }
+        handler.post({ sv_result.fullScroll(ScrollView.FOCUS_DOWN) })
     }
 
     protected fun receiveData(t:T,data: ByteArray){
-        L.d("=="+t)
+        L.d("=="+t+"=="+Arrays.toString(data))
         val result = if (cb_hex_rev.isChecked) {
             HexDump.toHexString(data)
         } else {
             val stringier = StringBuilder()
             for (b in data) {
-                stringier.append(b.toInt()).append("   ")
+                stringier.append(b.toInt()).append(" ")
             }
             stringier.toString()
         }

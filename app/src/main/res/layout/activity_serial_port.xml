@@ -28,21 +28,21 @@
             layout="@layout/device_measure_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             tools:ignore="NestedWeights"/>
 
         <include
             layout="@layout/serial_receive_send_test"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="1.5"
             tools:ignore="NestedWeights"/>
 
         <include
             layout="@layout/controller_port"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"/>
+            android:layout_weight="6"/>
     </LinearLayout>
 
 </LinearLayout>
