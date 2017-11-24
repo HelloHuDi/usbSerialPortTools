@@ -10,7 +10,9 @@ import kotlinx.android.synthetic.main.device_measure_title.*
 import kotlinx.android.synthetic.main.serial_receive_send_test.*
 import java.io.IOException
 import java.io.OutputStream
+import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.concurrent.thread
 
 /**
  * Created by hd on 2017/11/22.
@@ -51,7 +53,7 @@ class SerialPortMeasureActivity : MeasureActivity<String>() {
                 flags = Integer.parseInt(sp_parity.selectedItem.toString())),
                 serialPortMeasureListener = object : SerialPortMeasureListener {
                     override fun measureError(message: String) {
-                        receiveData(message)
+                        receiveDataWithLineFeed(message)
                     }
 
                     override fun measuring(path: String, data: ByteArray) {
@@ -63,57 +65,9 @@ class SerialPortMeasureActivity : MeasureActivity<String>() {
                     }
 
                     override fun write(outputStream: OutputStream) {
-                        if (portTest.get()) {
-                            writeTest(outputStream)
-                        }
+                        outputIO = outputStream
                     }
                 })
-    }
-
-    private fun readTest(data: ByteArray) {
-        synchronized(mByteReceivedBackSemaphore) {
-            var i = 0
-            while (i < data.size) {
-                if (data[i] == mValueToSend && !mByteReceivedBack) {
-                    mValueToSend++
-                    // This byte was expected
-                    // Wake-up the sending thread
-                    mByteReceivedBack = true
-                } else {
-                    // The byte was not expected
-                    abnormalCount++
-                }
-                i++
-            }
-        }
-    }
-
-    private fun writeTest(outputStream: OutputStream) {
-        synchronized(mByteReceivedBackSemaphore) {
-            mByteReceivedBack = false
-            try {
-                outputStream.write(mValueToSend.toInt())
-            } catch (e: IOException) {
-                e.printStackTrace()
-                return
-            }
-            receiveCount++
-            // Wait for 100ms before sending next byte, or as soon as
-            // the sent byte has been read back.
-            try {
-                if (mByteReceivedBack) {
-                    // Byte has been received
-                    sendCount++
-                } else {
-                    // Timeout
-                    loseCount++
-                }
-                runOnUiThread {
-                    setTestCount(receiveCount.toString(), loseCount.toString(), sendCount.toString(), abnormalCount.toString())
-                }
-            } catch (ignored: InterruptedException) {
-            }
-        }
     }
 
     override fun sendData(data: String) {
@@ -122,8 +76,9 @@ class SerialPortMeasureActivity : MeasureActivity<String>() {
         super.sendData(data)
     }
 
+    private var outputIO: OutputStream? = null
     private val portTest = AtomicBoolean(false)
-    private val mByteReceivedBackSemaphore = Any()
+    private val mByteReceivedBackSemaphore = java.lang.Object()
     private var mValueToSend: Byte = 0
     private var mByteReceivedBack: Boolean = false
     private var sendCount = 0
@@ -132,9 +87,67 @@ class SerialPortMeasureActivity : MeasureActivity<String>() {
     private var abnormalCount = 0
 
     fun startSendDataTest(v: android.view.View) {
-        portTest.set(true)
-        resetTestCount()
-        controlledPort(v)
+        if (port != null && open.get()) {
+            resetTestCount()
+            portTest.set(true)
+            thread { writeTest() }
+        } else if (port == null) {
+            receiveDataWithLineFeed(resources.getString(R.string.choose_device))
+        } else {
+            receiveDataWithLineFeed(resources.getString(R.string.please_open_port_first))
+        }
+    }
+
+    private fun writeTest() {
+        while (portTest.get()) {
+            synchronized (mByteReceivedBackSemaphore) {
+                mByteReceivedBack = false
+                try {
+                    outputIO?.write(mValueToSend.toInt())
+                } catch (e: IOException) {
+                    L.e("write data test error :" + e)
+                    return
+                }
+                sendCount++
+                // Wait for 550ms before sending next byte, or as soon as
+                // the sent byte has been read back.
+                try {
+                    mByteReceivedBackSemaphore.wait(550)
+                    if (mByteReceivedBack) {
+                        // Byte has been received
+                        receiveCount++
+                    } else {
+                        // Timeout
+                        loseCount++
+                    }
+                    runOnUiThread {
+                        setTestCount(receiveCount.toString(), loseCount.toString(), sendCount.toString(), abnormalCount.toString())
+                    }
+                } catch (ignored: InterruptedException) {
+                    L.e("write data test error :" + ignored)
+                }
+            }
+        }
+    }
+
+    private fun readTest(data: ByteArray) {
+        synchronized (mByteReceivedBackSemaphore) {
+            var i = 0
+            L.d("receive data :" + Arrays.toString(data))
+            while (i < data.size) {
+                if (data[i] == mValueToSend && !mByteReceivedBack) {
+                    mValueToSend++
+                    // This byte was expected
+                    // Wake-up the sending thread
+                    mByteReceivedBack = true
+                    mByteReceivedBackSemaphore.notify()
+                } else {
+                    // The byte was not expected
+                    abnormalCount++
+                }
+                i++
+            }
+        }
     }
 
     private fun resetTestCount() {

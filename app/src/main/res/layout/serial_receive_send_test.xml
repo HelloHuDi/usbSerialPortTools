@@ -12,12 +12,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/send_receive_test"
-        android:textSize="10sp"
+        android:textSize="12sp"
         tools:ignore="NestedWeights"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
         android:orientation="horizontal">
 
         <TextView

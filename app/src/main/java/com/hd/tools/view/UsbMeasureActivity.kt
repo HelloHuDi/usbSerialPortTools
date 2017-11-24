@@ -58,7 +58,7 @@ class UsbMeasureActivity : MeasureActivity<UsbSerialPort>() {
                 stopBits = Integer.parseInt(sp_stop.selectedItem.toString()), parity = Integer.parseInt(sp_parity.selectedItem.toString())),//
                 usbMeasureListener = object : UsbMeasureListener {
                     override fun measureError(message: String) {
-                        receiveData(message)
+                        receiveDataWithLineFeed(message)
                     }
 
                     override fun measuring(usbSerialPort: UsbSerialPort, data: ByteArray) {

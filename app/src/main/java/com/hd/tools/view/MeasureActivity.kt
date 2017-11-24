@@ -36,7 +36,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
 
     protected var mAdapter: ArrayAdapter<T>? = null
 
-    private val open = AtomicBoolean(false)
+    protected val open = AtomicBoolean(false)
 
     private var receiveNumber: Int = 0
 
@@ -107,7 +107,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
             btn_open_or_close.text = resources.getString(R.string.open_port)
         } else {//open
             if (port == null) {
-                receiveData(resources.getString(R.string.choose_device))
+                receiveDataWithLineFeed(resources.getString(R.string.choose_device))
             } else {
                 open.set(true)
                 startConnect()
@@ -119,7 +119,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
     /** [btn_send]*/
     fun sendDataToPort(v: android.view.View) {
         if (!open.get()) {
-            receiveData(resources.getString(R.string.please_open_port_first))
+            receiveDataWithLineFeed(resources.getString(R.string.please_open_port_first))
             return
         }
         sendData(et_write_data.text.toString().trim())
@@ -152,7 +152,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
             if (ins.isNotEmpty()) {
                 sendHexData(ins, arrayList)
             } else {
-                receiveData(resources.getString(R.string.send_data_is_null))
+                receiveDataWithLineFeed(resources.getString(R.string.send_data_is_null))
             }
         } else {
             try {
@@ -160,7 +160,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
                 DeviceMeasureController.write(arrayList)
             } catch (e: UnsupportedEncodingException) {
                 e.printStackTrace()
-                receiveData(resources.getString(R.string.transcoding_failure))
+                receiveDataWithLineFeed(resources.getString(R.string.transcoding_failure))
             }
         }
     }
@@ -174,13 +174,13 @@ abstract class MeasureActivity<T> : BaseActivity() {
             try {
                 val d = Integer.parseInt(hex, 16)
                 if (d > 255) {
-                    receiveData(String.format(resources.getString(R.string.greater_than_ff), hex))
+                    receiveDataWithLineFeed(String.format(resources.getString(R.string.greater_than_ff), hex))
                     okflag = false
                 } else {
                     bytes[index] = d.toByte()
                 }
             } catch (e: NumberFormatException) {
-                receiveData(String.format(resources.getString(R.string.is_not_hex), hex))
+                receiveDataWithLineFeed(String.format(resources.getString(R.string.is_not_hex), hex))
                 e.printStackTrace()
                 okflag = false
             }
@@ -193,11 +193,15 @@ abstract class MeasureActivity<T> : BaseActivity() {
 
     private val handler = android.os.Handler()
 
+    protected fun receiveDataWithLineFeed(string: String){
+        receiveData(string+"\n")
+    }
+
     @SuppressLint("SetTextI18n")
-    protected fun receiveData(string: String){
+    private fun receiveData(string: String){
         runOnUiThread {
             tv_receive_number.text = "receive: " + receiveNumber
-            tv_result.append(string + " ")
+            tv_result.append(string)
         }
         handler.post({ sv_result.fullScroll(ScrollView.FOCUS_DOWN) })
     }
