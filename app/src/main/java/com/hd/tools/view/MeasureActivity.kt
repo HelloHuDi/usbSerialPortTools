@@ -51,6 +51,8 @@ abstract class MeasureActivity<T> : BaseActivity() {
 
     abstract fun startConnect()
 
+    abstract fun writeData(arrayList: ArrayList<ByteArray>)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(setLayoutId())
@@ -157,7 +159,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
         } else {
             try {
                 arrayList.add(ins.toByteArray(charset("UTF-8")))
-                DeviceMeasureController.write(arrayList)
+                writeData(arrayList)
             } catch (e: UnsupportedEncodingException) {
                 e.printStackTrace()
                 receiveDataWithLineFeed(resources.getString(R.string.transcoding_failure))
@@ -187,7 +189,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
         }
         arrayList.add(bytes)
         if (okflag && arrayList.size > 0) {
-            DeviceMeasureController.write(arrayList)
+            writeData(arrayList)
         }
     }
 

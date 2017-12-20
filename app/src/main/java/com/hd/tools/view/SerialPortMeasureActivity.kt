@@ -70,6 +70,10 @@ class SerialPortMeasureActivity : MeasureActivity<String>() {
                 })
     }
 
+    override fun writeData(arrayList: ArrayList<ByteArray>) {
+        arrayList.forEach { outputIO?.write(it) }
+    }
+
     override fun sendData(data: String) {
         stopSendDataTest(null)
         resetTestCount()

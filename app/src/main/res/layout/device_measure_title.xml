@@ -75,7 +75,7 @@
         android:id="@+id/btn_open_or_close"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="1.2"
         android:onClick="controlledPort"
         android:text="@string/open_port"
         android:textSize="@dimen/text_size"/>

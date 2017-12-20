@@ -66,10 +66,17 @@ class UsbMeasureActivity : MeasureActivity<UsbSerialPort>() {
                     }
 
                     override fun write(usbSerialPort: UsbSerialPort) {
-
+                        usbPort=usbSerialPort
                     }
                 })
     }
+
+    private var usbPort: UsbSerialPort?=null
+
+    override fun writeData(arrayList: java.util.ArrayList<ByteArray>) {
+        arrayList.forEach { usbPort?.write(it,1000) }
+    }
+
 }
 
 
