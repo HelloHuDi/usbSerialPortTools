@@ -49,7 +49,7 @@ class UsbMeasureActivity : MeasureActivity<UsbSerialPort>() {
             is FtdiSerialDriver -> "FTDxx "
             else -> "unknown "
         }
-        return "$subtitle\nvendorId:${driver.device.vendorId},productId:${driver.device.productId}"
+        return "$subtitle\nvendorId:${driver.device.vendorId},\nproductId:${driver.device.productId},\nname:${driver.device.deviceName}"
     }
 
     override fun startConnect() {

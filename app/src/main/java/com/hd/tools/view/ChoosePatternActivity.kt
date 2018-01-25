@@ -22,20 +22,20 @@ class ChoosePatternActivity : BaseActivity() {
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
         setContentView(R.layout.activity_choose_pattern)
-        showVideo.showVideo()
+//        showVideo.showVideo()
     }
 
     override fun onStop() {
         super.onStop()
-        showVideo.stopVideo()
+//        showVideo.stopVideo()
     }
 
-    /** 串口设备测量*/
+    /** serial port device measure*/
     fun measureSerial(v: android.view.View) {
         startActivity<SerialPortMeasureActivity>()
     }
 
-    /** usb转串设备测量*/
+    /** usb serial port device measure*/
     fun measureUsb(v: android.view.View) {
         startActivity<UsbMeasureActivity>()
     }
