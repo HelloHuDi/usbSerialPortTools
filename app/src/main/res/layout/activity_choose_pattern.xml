@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.ChoosePatternActivity">
 
-    <com.hd.tools.custom.BackgroundVideoView
-        android:id="@+id/bgVideoView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
