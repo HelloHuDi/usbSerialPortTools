@@ -4,8 +4,8 @@
 
 ## screenshot：
 
-<img src="/capture/main.png" />
+<img src="capture/main.png" width="500px" height="250px"/>
 
-<img src="/capture/usb_measure.png"/>
+<img src="capture/usb_measure.png" width="500px" height="250px"/>
 
-<img src="/capture/serial_measure.png"/>
+<img src="capture/serial_measure.png" width="500px" height="250px"/>
