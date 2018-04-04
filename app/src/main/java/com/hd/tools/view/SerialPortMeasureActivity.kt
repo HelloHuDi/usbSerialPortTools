@@ -109,7 +109,7 @@ class SerialPortMeasureActivity : MeasureActivity<String>() {
                 try {
                     outputIO?.write(mValueToSend.toInt())
                 } catch (e: IOException) {
-                    L.e("write data test error :" + e)
+                    L.e("write data test error :$e")
                     return
                 }
                 sendCount++
@@ -128,7 +128,7 @@ class SerialPortMeasureActivity : MeasureActivity<String>() {
                         setTestCount(receiveCount.toString(), loseCount.toString(), sendCount.toString(), abnormalCount.toString())
                     }
                 } catch (ignored: InterruptedException) {
-                    L.e("write data test error :" + ignored)
+                    L.e("write data test error :$ignored")
                 }
             }
         }

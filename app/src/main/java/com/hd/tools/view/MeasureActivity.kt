@@ -90,7 +90,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
             if (port != null && open.get()) {
                 btn_open_or_close.callOnClick()
             }
-            Log.d(TAG, "Pressed item " + position)
+            Log.d(TAG, "Pressed item $position")
             if (position >= mEntries.size) {
                 Log.w(TAG, "Illegal position.")
                 return@OnItemClickListener
@@ -202,7 +202,7 @@ abstract class MeasureActivity<T> : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun receiveData(string: String){
         runOnUiThread {
-            tv_receive_number.text = "receive: " + receiveNumber
+            tv_receive_number.text = "receive: $receiveNumber"
             tv_result.append(string)
         }
         handler.post({ sv_result.fullScroll(ScrollView.FOCUS_DOWN) })
