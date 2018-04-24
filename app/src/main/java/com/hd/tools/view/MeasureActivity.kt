@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.annotation.LayoutRes
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import com.hd.serialport.method.DeviceMeasureController
 import com.hd.serialport.utils.HexDump
 import com.hd.serialport.utils.L
 import com.hd.tools.R
+import com.hd.tools.R.id.*
+import com.hd.viewcapture.ViewCapture
 import kotlinx.android.synthetic.main.controller_port.*
 import kotlinx.android.synthetic.main.device_measure_title.*
 import kotlinx.android.synthetic.main.port_list.*
@@ -135,6 +138,18 @@ abstract class MeasureActivity<T> : BaseActivity() {
         receiveNumber = 0
     }
 
+    /** [btn_capture]*/
+    fun dataCapture(v: android.view.View) {
+        ViewCapture.with(sv_result).asJPG(80)
+                .setFileName(SystemClock.currentThreadTimeMillis().toString())
+                .setOnSaveResultListener { isSaved, _, _ ->
+                    receiveData(if (isSaved)
+                        resources.getString(R.string.save_bitmap_success)
+                    else
+                        resources.getString(R.string.save_bitmap_failed))
+                }.save()
+    }
+
     fun setSpinnerAdapter(spinner: Spinner, data: Array<String>) {
         val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -195,12 +210,12 @@ abstract class MeasureActivity<T> : BaseActivity() {
 
     private val handler = android.os.Handler()
 
-    protected fun receiveDataWithLineFeed(string: String){
-        receiveData(string+"\n")
+    protected fun receiveDataWithLineFeed(string: String) {
+        receiveData(string + "\n")
     }
 
     @SuppressLint("SetTextI18n")
-    private fun receiveData(string: String){
+    private fun receiveData(string: String) {
         runOnUiThread {
             tv_receive_number.text = "receive: $receiveNumber"
             tv_result.append(string)
@@ -208,8 +223,8 @@ abstract class MeasureActivity<T> : BaseActivity() {
         handler.post({ sv_result.fullScroll(ScrollView.FOCUS_DOWN) })
     }
 
-    protected fun receiveData(t:T,data: ByteArray){
-        L.d("=="+t+"=="+Arrays.toString(data))
+    protected fun receiveData(t: T, data: ByteArray) {
+        L.d("==" + t + "==" + Arrays.toString(data))
         val result = if (cb_hex_rev.isChecked) {
             HexDump.toHexString(data)
         } else {

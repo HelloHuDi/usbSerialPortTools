@@ -47,14 +47,20 @@
             android:onClick="clearText"
             style="@style/average_vertical_widget"
             android:text="@string/clear_text"/>
+
+        <Button
+            android:id="@+id/btn_capture"
+            android:onClick="dataCapture"
+            style="@style/average_vertical_widget"
+            android:text="@string/data_capture"/>
     </LinearLayout>
 
     <ScrollView
         android:id="@+id/sv_result"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        android:background="@drawable/storke">
+        android:background="@drawable/storke"
+        android:layout_weight="5">
 
         <TextView
             android:id="@+id/tv_result"

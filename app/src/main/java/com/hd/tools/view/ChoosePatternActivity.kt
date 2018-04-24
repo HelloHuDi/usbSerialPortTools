@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import com.hd.tools.R
-import org.jetbrains.anko.startActivity
 
 /**
  * Created by hd on 2017/11/22.
@@ -22,12 +21,12 @@ class ChoosePatternActivity : BaseActivity() {
 
     /** serial port device measure*/
     fun measureSerial(v: android.view.View) {
-        startActivity<SerialPortMeasureActivity>()
+        startActivity(intent.setClass(this,SerialPortMeasureActivity::class.java))
     }
 
     /** usb serial port device measure*/
     fun measureUsb(v: android.view.View) {
-        startActivity<UsbMeasureActivity>()
+        startActivity(intent.setClass(this,UsbMeasureActivity::class.java))
     }
 
 }

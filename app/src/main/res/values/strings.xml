@@ -1,4 +1,5 @@
 <resources>
+    <string name="provide_capture_function">提供数据截图功能</string>
     <string name="app_name">串口设备检测</string>
     <string name="baudrate">波特率</string>
     <string name="data_bits">数据位</string>
@@ -14,6 +15,7 @@
     <string name="open_port">打开串口</string>
     <string name="close_port">关闭串口</string>
     <string name="clear_text">清空文本</string>
+    <string name="data_capture">数据截图</string>
     <string name="send_data">发送数据</string>
     <string name="send_receive_test">数据收发测试</string>
     <string name="receive_data">接收数据</string>
@@ -24,6 +26,8 @@
     <string name="send_hex">HEX发送</string>
     <string name="receive_hex">HEX接收</string>
     <string name="receive_hint">准备接收数据</string>
+    <string name="save_bitmap_success">数据截图保存成功</string>
+    <string name="save_bitmap_failed">数据截图保存失败</string>
     <string name="receive_data_count">RECEIVE COUNT</string>
     <string name="send_data_hint">字符模式直接输入,如:Hello World,HEX模式用空格分割,如:1E 10 20 F0</string>
     <string-array name="baudrates">
