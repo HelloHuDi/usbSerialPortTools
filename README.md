@@ -2,6 +2,8 @@
 
 ## [download apk](https://raw.githubusercontent.com/HelloHuDi/usbSerialPortTools/master/app/release/app-release.apk)
 
+## support android sdk version 19+
+
 ## screenshot：
 
 <img src="capture/main.png" width="500px" height="250px"/>
