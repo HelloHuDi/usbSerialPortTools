@@ -1,4 +1,4 @@
-## This project is based on [usb-with-serial-port](https://github.com/HelloHuDi/usb-with-serial-port) engineering and provides a simple debugging tool to provide the function of communication with USB serial and serial devices.
+## 本工程是基于[usb-with-serial-port](https://github.com/HelloHuDi/usb-with-serial-port)开发的简单调试工具.
 
 ## [download apk](https://raw.githubusercontent.com/HelloHuDi/usbSerialPortTools/master/app/release/app-release.apk)
 
